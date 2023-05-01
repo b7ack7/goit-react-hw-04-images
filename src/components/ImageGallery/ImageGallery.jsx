@@ -1,16 +1,19 @@
 import PropTypes from 'prop-types';
-import { ImageGalleryItem } from "components/ImageGalleryItem";
+import { ImageGalleryItem } from 'components/ImageGalleryItem';
 import { ImageGalleryWrapper } from './ImageGallery.styled';
 
-export const ImageGallery = ({images, closeModal}) => {
+
+export const ImageGallery = ({images}) => {
     return (
-        <ImageGalleryWrapper onClick={closeModal}>
+        <ImageGalleryWrapper >
               {images.map(image => {
-                return <ImageGalleryItem key={image.id}
-                tags={image.tags}
-                webformatURL={image.webformatURL}
-                largeImageURL={image.largeImageURL}
-                />
+                return  (
+                    <ImageGalleryItem key={image.id}
+                    tags={image.tags}
+                    webformatURL={image.webformatURL}
+                    largeImageURL={image.largeImageURL}
+                    />
+                )
             })}
         </ImageGalleryWrapper>
     )
@@ -22,6 +25,6 @@ ImageGallery.propTypes = {
         tags: PropTypes.string.isRequired,
         webformatURL: PropTypes.string.isRequired,
         largeImageURL: PropTypes.string.isRequired
-    })),
-    closeModal: PropTypes.func.isRequired
+    }))
 }
+

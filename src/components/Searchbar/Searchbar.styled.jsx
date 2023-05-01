@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { Field, Form } from 'formik';
 
 export const SearchbarWrapper = styled.header`
 top: 0;
@@ -20,7 +19,7 @@ box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
   0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 `;
 
-export const SearchForm  = styled(Form)`
+export const SearchForm  = styled.form`
 display: flex;
 align-items: center;
 width: 100%;
@@ -44,9 +43,13 @@ outline: none;
 :hover {
     opacity: 1;
   }
+svg {
+  width: 20px;
+  height: 20px;
+}  
 `;
 
-export const SearchFormInput = styled(Field)`
+export const SearchFormInput = styled.input`
 // position: relative;
 display: inline-block;
 width: 100%;
@@ -60,13 +63,4 @@ padding-right: 4px;
   font: inherit;
   font-size: 18px;
 }
-`;
-
-export const Message = styled.div`
-position: absolute;
-top: 35%;
-left: 50%;
-background: #3f51b5;
-border-radius: 2px;
-font-size: 18px;
 `;

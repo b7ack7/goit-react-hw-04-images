@@ -19,4 +19,8 @@ max-height: calc(100vh - 24px);
 width: 800px;
 `;
 
-export const Img = styled.img``;
+export const Img = styled.img`
+display: block;
+max-width: 100%;
+height: auto;
+`;

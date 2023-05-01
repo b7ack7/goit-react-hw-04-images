@@ -1,48 +1,47 @@
-import React, {Component} from "react";
-import { Formik, ErrorMessage } from "formik";
-import * as yup from "yup";
+import React, { useState } from "react";
 import PropTypes from 'prop-types';
 import {GoSearch} from 'react-icons/go';
-import { SearchbarWrapper, SearchForm, SearchFormButton, SearchFormInput, Message } from "./Searchbar.styled";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { SearchbarWrapper, SearchForm, SearchFormButton, SearchFormInput} from "./Searchbar.styled";
 
+export const Searchbar = ({onSubmit}) => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [disabledBtn, setDisabledBtn] = useState(false);
 
-const initialValues = {
-  searchQuery: ""
+  const handleChangeSearchForm = (event) => {
+    setSearchQuery(event.target.value);
+    setDisabledBtn(false);
+  }
+  
+  const  handleSubmitSearchForm = (event) => {
+    event.preventDefault();
+    if (searchQuery.trim() === "") {
+      toast.error("Search is a required field");
+      return;
+    }
+    onSubmit(searchQuery);
+    setDisabledBtn(true);   
+  };
+
+      return (     
+        <SearchbarWrapper>
+         <SearchForm onSubmit={handleSubmitSearchForm}>
+         <SearchFormButton type="submit" aria-label="search" disabled={disabledBtn}>
+         <GoSearch />
+         </SearchFormButton >
+        <SearchFormInput
+        name="searchQuery"
+        onChange={handleChangeSearchForm}
+        value={searchQuery}
+        type="text"
+        placeholder="Search images and photos"
+        />
+         </SearchForm>
+       </SearchbarWrapper>    
+     )
 }
 
-const schema = yup.object().shape({
-  searchQuery: yup.string().trim().required("Search is a required field")
-})
-
-export class Searchbar extends Component {
-  
-  static propTypes = {
-    onSubmit: PropTypes.func.isRequired
-  }
-
-    handleSubmitSearchForm = (values, actions) => {
-        this.props.onSubmit({...values});
-      };
-
-    render() {
-        return (     
-         <SearchbarWrapper>
-         <Formik initialValues={initialValues}
-         onSubmit={this.handleSubmitSearchForm}
-         validationSchema={schema}>
-          <SearchForm>
-          <SearchFormButton type="submit" aria-label="search">
-          <GoSearch/>
-          </SearchFormButton >
-         <SearchFormInput
-         name="searchQuery"
-         type="text"
-         placeholder="Search images and photos"
-         />
-         <ErrorMessage name="searchQuery" component={Message}/>
-          </SearchForm>
-        </Formik>
-        </SearchbarWrapper>    
-      )
-    }
+SearchForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired
 }
